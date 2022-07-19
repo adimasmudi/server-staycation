@@ -6,4 +6,32 @@
       <th>Action</th>
     </tr>
   </thead>
+  <tbody>
+    <% for(let i = 0; i < category.length; i++){ %>
+    <tr>
+      <td><%= i+1 %></td>
+      <td><%= category[i].name %></td>
+      <td>
+        <form
+          action="/admin/category/<%= category[i].id %>?_method=DELETE"
+          method="POST"
+        >
+          <a
+            href="javascript:void();"
+            class="btn btn-warning btn-circle button-update"
+            data-bs-toggle="modal"
+            data-bs-target="#modalEdit"
+            data-id="<%= category[i].id %>"
+            data-name="<%= category[i].name %>"
+            ><i class="fa fa-edit"></i
+          ></a>
+          <button type="submit" href="" class="btn btn-danger btn-circle">
+            <i class="fa fa-trash"></i>
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
 </table>
+<%- include("edit_modal.ejs") %>
