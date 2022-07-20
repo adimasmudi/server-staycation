@@ -15,12 +15,16 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+          <%- include("../../partials/message.ejs") %>
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Bank</h1>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Table Bank</h6>
+               <!-- Button trigger modal -->
+               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa fa-plus"></i>
+              </button>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -78,4 +82,15 @@
     </div>
   </div>
 </body>
+<%- include("add_modal.ejs") %>
 <%- include('../../partials/js.ejs') %>
+
+<script>
+  $('#dataTable').on('click','.button-update', function(){
+    $('.id').val($(this).data('id'));
+    $('.bankName').val($(this).data('bankname'));
+    $('.nomorRekening').val($(this).data('nomorrekening'));
+    $('.name').val($(this).data('name'));
+    console.log($(this))
+  })
+</script>

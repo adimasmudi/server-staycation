@@ -5,11 +5,15 @@ const bank = new mongoose.Schema({
     type: String,
     required: true,
   },
-  nomerRekening: {
+  nomorRekening: {
     type: String,
     required: true,
   },
   name: {
+    type: String,
+    required: true,
+  },
+  imageUrl: {
     type: String,
     required: true,
   },

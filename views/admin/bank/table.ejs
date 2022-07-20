@@ -5,7 +5,48 @@
       <th>Nama Bank</th>
       <th>Nomor Rekening</th>
       <th>Nama Pemilik</th>
+      <th>Image</th>
       <th>Action</th>
     </tr>
   </thead>
+  <tbody>
+    <% for(let i=0;i < bank.length; i++){ %>
+    <tr>
+      <td><%= i+1 %></td>
+      <td><%= bank[i].nameBank %></td>
+      <td><%= bank[i].nomorRekening %></td>
+      <td><%= bank[i].name %></td>
+      <td>
+        <img
+          src="http://localhost:3000/<%= bank[i].imageUrl %>"
+          alt="<%= bank[i].nameBank %>"
+          width="70px"
+          height="70px"
+        />
+      </td>
+      <td>
+        <form
+          action="/admin/bank/<%= bank[i].id %>?_method=DELETE"
+          method="POST"
+        >
+          <a
+            href="javascript:void();"
+            class="btn btn-warning btn-circle button-update"
+            data-bs-toggle="modal"
+            data-bs-target="#modalEdit"
+            data-id="<%= bank[i].id %>"
+            data-bankName="<%= bank[i].nameBank %>"
+            data-name="<%= bank[i].name %>"
+            data-nomorRekening="<%= bank[i].nomorRekening %>"
+            ><i class="fa fa-edit"></i
+          ></a>
+          <button type="submit" href="" class="btn btn-danger btn-circle">
+            <i class="fa fa-trash"></i>
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
 </table>
+<%- include("edit_modal.ejs") %>

@@ -1,0 +1,82 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="modalEdit"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Bank</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >&times;</button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/bank?_method=PUT" method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="bankName" class="form-label">Bank Name</label>
+            <input
+              type="text"
+              class="form-control bankName"
+              id="bankName"
+              aria-describedby="bank"
+              placeholder="Enter name"
+              name="bankName"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="nomorRekening" class="form-label">Nomor Rekening</label>
+            <input
+              type="text"
+              class="form-control nomorRekening"
+              id="nomorRekening"
+              aria-describedby="rekening"
+              placeholder="Enter number"
+              name="nomorRekening"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Name" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control name"
+              id="Name"
+              aria-describedby="name"
+              placeholder="Enter name"
+              name="Name"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input
+              type="file"
+              class="form-control"
+              id="image"
+              aria-describedby="image"
+              name="image"
+              
+            />
+            <span>Pilih Gambar untuk update image</span>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" class="id" name="id">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+            </button>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
