@@ -18,6 +18,10 @@ router.delete("/bank/:id", upload, adminController.deleteBank);
 // item
 router.get("/item", adminController.view_item);
 router.post("/item", uploadMultiple, adminController.addItem);
+router.get("/item/show-image/:id", adminController.showImageItem);
+router.get("/item/:id", adminController.showEditItem);
+router.put("/item/:id", uploadMultiple, adminController.editItem);
+router.delete("/item/:id/delete", adminController.deleteItem);
 
 // booking
 router.get("/booking", adminController.view_booking);

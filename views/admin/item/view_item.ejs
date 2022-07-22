@@ -19,6 +19,7 @@
           <%- include("../../partials/message.ejs") %>
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Items</h1>
+          <% if(action == "view"){ %>
           <!-- DataTales Example -->
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -35,6 +36,25 @@
             <%- include('add_item.ejs') %>
             
           </div>
+          <% }else if(action == "show image"){ %>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="show-tab" data-bs-toggle="tab" data-bs-target="#show-image" type="button" role="tab" aria-controls="show-image" aria-selected="true">Show Image</button>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+             <%- include("show_image_item.ejs") %>
+            </div>
+          <% }else{ %>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="show-tab" data-bs-toggle="tab" data-bs-target="#edit-item" type="button" role="tab" aria-controls="edit-item" aria-selected="true">Edit Item</button>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+             <%- include("edit_item.ejs") %>
+            </div>
+          <% } %>
           
           
     <!-- End of Content Wrapper -->
