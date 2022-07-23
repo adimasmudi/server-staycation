@@ -1,44 +1,48 @@
-<%- include('../../partials/header.ejs') %>
+
+<%- include('../../../partials/header.ejs') %>
 
 <body id="page-top">
   <!-- Page Wrapper -->
   <div id="wrapper">
     <!-- Sidebar -->
-    <%- include ('../../partials/sidebar.ejs') %>
+    <%- include ('../../../partials/sidebar.ejs') %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
       <!-- Main Content -->
       <div id="content">
-        <%- include('../../partials/navbar.ejs') %>
+        <%- include('../../../partials/navbar.ejs') %>
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          <%- include("../../partials/message.ejs") %>
+          <%- include("../../../partials/message.ejs") %>
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Bank</h1>
+          <h1 class="h3 mb-4 text-gray-800">Detail Item</h1>
+         
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-               <!-- Button trigger modal -->
-               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="fa fa-plus"></i>
-              </button>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <%- include('table.ejs') %>
-        </div>
-        <!-- /.container-fluid -->
-      </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <%- include('../../partials/footer.ejs') %>
-      <!-- End of Footer -->
-    </div>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="show-tab" data-bs-toggle="tab" data-bs-target="#show-feature" type="button" role="tab" aria-controls="show" aria-selected="true">Show Feature</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="show-tab" data-bs-toggle="tab" data-bs-target="#show-activity" type="button" role="tab" aria-controls="show" aria-selected="false">Show Activity</button>
+              </li>
+            
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <%- include("show_feature.ejs") %>
+            <%- include("show_activity.ejs") %>
+            
+            
+          </div>
+          
+          
+          
     <!-- End of Content Wrapper -->
+    <!-- Footer -->
+    <%- include('../../../partials/footer.ejs') %>
+    <!-- End of Footer -->
   </div>
   <!-- End of Page Wrapper -->
 
@@ -82,14 +86,15 @@
     </div>
   </div>
 </body>
-<%- include("add_modal.ejs") %>
-<%- include('../../partials/js.ejs') %>
-
+<%- include('../../../partials/js.ejs') %>
 <script>
-  $('#dataTable').on('click','.button-update', function(){
-    $('.id').val($(this).data('id'));
-    $('.bankName').val($(this).data('bankname'));
-    $('.nomorRekening').val($(this).data('nomorrekening'));
-    $('.name').val($(this).data('name'));
-  })
+    $(document).ready(function(){
+        $("#dataTableActivity").dataTable()
+    })
+
+    $('#dataTable').on('click','.button-update', function(){
+        $('.id').val($(this).data('id'));
+        $('.name').val($(this).data('name'));
+        $('.qty').val($(this).data('qty'));
+    })
 </script>

@@ -23,6 +23,16 @@ router.get("/item/:id", adminController.showEditItem);
 router.put("/item/:id", uploadMultiple, adminController.editItem);
 router.delete("/item/:id/delete", adminController.deleteItem);
 
+// endpoint detailitem
+router.get("/item/show-detail-item/:itemId", adminController.viewDetailItem);
+router.post("/item/add/feature", upload, adminController.addFeature);
+router.put("/item/update/feature", upload, adminController.editFeature);
+router.delete(
+  "/item/:itemId/feature/:id",
+  upload,
+  adminController.deleteFeature
+);
+
 // booking
 router.get("/booking", adminController.view_booking);
 
