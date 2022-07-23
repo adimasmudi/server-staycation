@@ -3,6 +3,7 @@ const Bank = require("../models/Bank");
 const Item = require("../models/Item");
 const Image = require("../models/Image");
 const Feature = require("../models/Feature");
+const Activity = require("../models/Activity");
 const fs = require("fs-extra");
 const path = require("path");
 
@@ -335,6 +336,7 @@ module.exports = {
   viewDetailItem: async (req, res) => {
     const { itemId } = req.params;
     const feature = await Feature.find({ itemId: itemId });
+    const activity = await Activity.find({ itemId: itemId });
     try {
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
@@ -344,6 +346,7 @@ module.exports = {
         alert,
         itemId,
         feature,
+        activity,
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -419,6 +422,83 @@ module.exports = {
       await fs.unlink(path.join(`public/${feature.imageUrl}`));
       feature.remove();
       req.flash("alertMessage", "feature deleted successfully");
+      req.flash("alertStatus", "success");
+      res.redirect(`/admin/item/show-detail-item/${itemId}`);
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect(`/admin/item/show-detail-item/${itemId}`);
+    }
+  },
+  addActivity: async (req, res) => {
+    const { Name, type, itemId } = req.body;
+
+    try {
+      if (!req.file) {
+        req.flash("alertMessage", "Image not found");
+        req.flash("alertStatus", "Danger");
+        res.redirect(`/admin/item/show-detail-item/${itemId}`);
+      }
+      const activity = await Activity.create({
+        name: Name,
+        type,
+        itemId,
+        imageUrl: `images/${req.file.filename}`,
+      });
+      const item = await Item.findOne({ _id: itemId });
+      item.activityId.push({ _id: activity._id });
+      await item.save();
+      req.flash("alertMessage", "activity added successfully");
+      req.flash("alertStatus", "success");
+      res.redirect(`/admin/item/show-detail-item/${itemId}`);
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect(`/admin/item/show-detail-item/${itemId}`);
+    }
+  },
+  editActivity: async (req, res) => {
+    const { id, Name, type, itemId } = req.body;
+    try {
+      const activity = await Activity.findOne({ _id: id });
+      if (req.file === undefined) {
+        activity.name = Name;
+        activity.type = type;
+        await activity.save();
+        req.flash("alertMessage", "activity updated successfully");
+        req.flash("alertStatus", "success");
+        res.redirect(`/admin/item/show-detail-item/${itemId}`);
+      } else {
+        await fs.unlink(path.join(`public/${activity.imageUrl}`));
+        activity.name = Name;
+        activity.type = type;
+        activity.imageUrl = `images/${req.file.filename}`;
+        await activity.save();
+        req.flash("alertMessage", "feature updated successfully");
+        req.flash("alertStatus", "success");
+        res.redirect(`/admin/item/show-detail-item/${itemId}`);
+      }
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect(`/admin/item/show-detail-item/${itemId}`);
+    }
+  },
+  deleteActivity: async (req, res) => {
+    const { id, itemId } = req.params;
+    try {
+      const activity = await Activity.findOne({ _id: id, itemId: itemId });
+
+      const item = await Item.findOne({ _id: itemId }).populate("activityId");
+      for (let i = 0; i < item.activityId.length; i++) {
+        if (item.activityId[i]._id.toString() === activity._id.toString()) {
+          item.activityId.pull({ _id: activity._id });
+          await item.save();
+        }
+      }
+      await fs.unlink(path.join(`public/${activity.imageUrl}`));
+      activity.remove();
+      req.flash("alertMessage", "activity deleted successfully");
       req.flash("alertStatus", "success");
       res.redirect(`/admin/item/show-detail-item/${itemId}`);
     } catch (error) {

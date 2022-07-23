@@ -92,6 +92,12 @@
         $("#dataTableActivity").dataTable()
     })
 
+    $('#dataTableActivity').on('click','.button-update', function(){
+        $('.id').val($(this).data('id'));
+        $('.name').val($(this).data('name'));
+        $('.type').val($(this).data('type'));
+    })
+
     $('#dataTable').on('click','.button-update', function(){
         $('.id').val($(this).data('id'));
         $('.name').val($(this).data('name'));

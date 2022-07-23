@@ -33,6 +33,14 @@ router.delete(
   adminController.deleteFeature
 );
 
+router.post("/item/add/activity", upload, adminController.addActivity);
+router.put("/item/update/activity", upload, adminController.editActivity);
+router.delete(
+  "/item/:itemId/activity/:id",
+  upload,
+  adminController.deleteActivity
+);
+
 // booking
 router.get("/booking", adminController.view_booking);
 
