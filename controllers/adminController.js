@@ -5,6 +5,8 @@ const Image = require("../models/Image");
 const Feature = require("../models/Feature");
 const Activity = require("../models/Activity");
 const Users = require("../models/Users");
+const Booking = require("../models/Booking");
+const Member = require("../models/Member");
 const fs = require("fs-extra");
 const path = require("path");
 const bcrypt = require("bcryptjs");
@@ -57,13 +59,21 @@ module.exports = {
     req.session.destroy();
     res.redirect("/admin/signin");
   },
-  view_dashboard: (req, res) => {
+  view_dashboard: async (req, res) => {
     try {
+      const member = await Member.find();
+      const booking = await Booking.find();
+      const item = await Item.find();
       res.render("admin/dashboard/view_dashboard", {
         title: "Staycation | Dashboard",
         user: req.session.user,
+        member,
+        booking,
+        item,
       });
-    } catch (error) {}
+    } catch (error) {
+      res.redirect("/admin/dashboard");
+    }
   },
   view_category: async (req, res) => {
     try {
@@ -565,10 +575,69 @@ module.exports = {
       res.redirect(`/admin/item/show-detail-item/${itemId}`);
     }
   },
-  view_booking: (req, res) => {
-    res.render("admin/booking/view_booking", {
-      title: "Staycation | Booking",
-      user: req.session.user,
-    });
+  view_booking: async (req, res) => {
+    try {
+      const booking = await Booking.find()
+        .populate("memberId")
+        .populate("bankId");
+
+      res.render("admin/booking/view_booking", {
+        title: "Staycation | Booking",
+        user: req.session.user,
+        booking,
+      });
+    } catch (error) {
+      res.redirect("/admin/booking");
+    }
+  },
+  showDetailBooking: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const booking = await Booking.findOne({ _id: id })
+        .populate("memberId")
+        .populate("bankId");
+      const alertMessage = req.flash("alertMessage");
+      const alertStatus = req.flash("alertStatus");
+      const alert = { message: alertMessage, status: alertStatus };
+      res.render("admin/booking/show_detail_booking", {
+        title: "Staycation | Show Detail Booking",
+        user: req.session.user,
+        booking,
+        alert,
+      });
+    } catch (error) {
+      res.redirect("/admin/booking");
+    }
+  },
+  actionConfirm: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const booking = await Booking.findOne({ _id: id });
+      booking.payments.status = "Accept";
+
+      booking.save();
+      req.flash("alertMessage", "Booking Confirmed");
+      req.flash("alertStatus", "success");
+      res.redirect(`/admin/booking/${id}`);
+    } catch (error) {
+      req.flash("alertMessage", `Problem When Confirm`);
+      req.flash("alertStatus", "danger");
+      res.redirect(`/admin/booking/${id}`);
+    }
+  },
+  actionReject: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const booking = await Booking.findOne({ _id: id });
+      booking.payments.status = "Reject";
+      booking.save();
+      req.flash("alertMessage", "Booking Rejected");
+      req.flash("alertStatus", "success");
+      res.redirect(`/admin/booking/${id}`);
+    } catch (error) {
+      req.flash("alertMessage", "Problem When Reject");
+      req.flash("alertStatus", "danger");
+      res.redirect(`/admin/booking/${id}`);
+    }
   },
 };

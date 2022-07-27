@@ -48,5 +48,8 @@ router.delete(
 
 // booking
 router.get("/booking", adminController.view_booking);
+router.get("/booking/:id", adminController.showDetailBooking);
+router.put("/booking/:id/confirmation", adminController.actionConfirm);
+router.put("/booking/:id/reject", adminController.actionReject);
 
 module.exports = router;
