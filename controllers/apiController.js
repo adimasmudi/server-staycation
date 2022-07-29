@@ -122,7 +122,7 @@ module.exports = {
     if (
       idItem === undefined ||
       duration === undefined ||
-      price === undefined ||
+      // price === undefined ||
       bookingStartDate === undefined ||
       bookingEndDate === undefined ||
       firstName === undefined ||
@@ -130,8 +130,7 @@ module.exports = {
       email === undefined ||
       phoneNumber === undefined ||
       accountHolder === undefined ||
-      bankFrom === undefined ||
-      proofPayment === undefined
+      bankFrom === undefined
     ) {
       return res.status(404).json({
         message: "All field must be fullfilled",
