@@ -9,9 +9,12 @@ const flash = require("connect-flash");
 
 // import mongoose
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/staycation", {
-  useNewUrlParser: true,
-});
+mongoose.connect(
+  "mongodb+srv://staycation:XLz7mayJOQ3fgmtQ@cluster0.hoyf0.mongodb.net/staycation?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+  }
+);
 require("./models/Users");
 
 var indexRouter = require("./routes/index");

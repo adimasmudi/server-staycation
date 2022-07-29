@@ -3,7 +3,7 @@ const seeder = require("mongoose-seed");
 
 // Connect to MongoDB via Mongoose
 seeder.connect(
-  "mongodb://localhost:27017/staycation",
+  "mongodb+srv://staycation:XLz7mayJOQ3fgmtQ@cluster0.hoyf0.mongodb.net/staycation?retryWrites=true&w=majority",
 
   function () {
     // Load Mongoose models
