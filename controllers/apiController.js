@@ -103,7 +103,7 @@ module.exports = {
     const {
       idItem,
       duration,
-      price,
+      // price,
       bookingStartDate,
       bookingEndDate,
       firstName,
@@ -112,7 +112,7 @@ module.exports = {
       phoneNumber,
       accountHolder,
       bankFrom,
-      proofPayment,
+      // proofPayment,
     } = req.body;
 
     if (!req.file) {
@@ -180,6 +180,6 @@ module.exports = {
 
     const booking = await Booking.create(newBooking);
 
-    return res.status(201).json({ message: "Booking Success", booking });
+    res.status(201).json({ message: "Booking Success", booking });
   },
 };
