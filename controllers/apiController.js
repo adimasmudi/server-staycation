@@ -132,7 +132,7 @@ module.exports = {
       accountHolder === undefined ||
       bankFrom === undefined
     ) {
-      return res.status(404).json({
+      res.status(404).json({
         message: "All field must be fullfilled",
       });
     }
